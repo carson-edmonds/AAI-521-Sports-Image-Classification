@@ -11,7 +11,7 @@ import helper
 
 # Setting page layout
 st.set_page_config(
-    page_title="Object Detection using YOLOv8",
+    page_title="Object Detection using YOLOv8 and Image Classification with ResNet50",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -25,7 +25,7 @@ st.sidebar.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'Segmentation'])
+    "Select Task", ['Detection', 'Classification'])
 
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
@@ -33,8 +33,8 @@ confidence = float(st.sidebar.slider(
 # Selecting Detection Or Segmentation
 if model_type == 'Detection':
     model_path = Path(settings.DETECTION_MODEL)
-elif model_type == 'Segmentation':
-    model_path = Path(settings.SEGMENTATION_MODEL)
+elif model_type == 'Classification':
+    model_path = Path(settings.CLASSIFICATION_MODEL)
 
 # Load Pre-trained ML Model
 try:
@@ -43,7 +43,7 @@ except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
 
-st.sidebar.header("Image/Video Config")
+st.sidebar.header("Image Config")
 source_radio = st.sidebar.radio(
     "Select Source", settings.SOURCES_LIST)
 
