@@ -21,7 +21,8 @@ WEBCAM = 'Webcam'
 RTSP = 'RTSP'
 YOUTUBE = 'YouTube'
 
-SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+# SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+SOURCES_LIST = [IMAGE]
 
 # Images config
 IMAGES_DIR = ROOT / 'images'
@@ -42,8 +43,8 @@ DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'soccer.jpg'
 # ML Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
-SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
-CLASSIFICATION_MODEL = MODEL_DIR / 'resnet18.pt'
+# SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
+CLASSIFICATION_MODEL = MODEL_DIR / 'model_resnet_v2_50.keras'
 
 # Webcam
 WEBCAM_PATH = 0

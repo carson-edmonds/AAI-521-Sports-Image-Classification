@@ -27,12 +27,12 @@ st.sidebar.header("ML Model Config")
 model_type = st.sidebar.radio(
     "Select Task", ['Detection', 'Classification'])
 
-confidence = float(st.sidebar.slider(
-    "Select Model Confidence", 25, 100, 40)) / 100
-
 # Selecting Detection Or Segmentation
 if model_type == 'Detection':
     model_path = Path(settings.DETECTION_MODEL)
+    sidebar_slider = st.sidebar.slider(
+    "Select Model Confidence", 25, 100, 40)
+    confidence = float(sidebar_slider) / 100
 elif model_type == 'Classification':
     model_path = Path(settings.CLASSIFICATION_MODEL)
 
@@ -60,7 +60,7 @@ if source_radio == settings.IMAGE:
             if source_img is None:
                 default_image_path = str(settings.DEFAULT_IMAGE)
                 default_image = PIL.Image.open(default_image_path)
-                st.image(default_image_path, caption="Default Image",
+                st.image(default_image_path, caption="Default Image Loaded",
                          use_column_width=True)
             else:
                 uploaded_image = PIL.Image.open(source_img)

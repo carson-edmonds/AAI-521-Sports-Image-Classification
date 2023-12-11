@@ -2,3 +2,6 @@ torch
 ultralytics
 streamlit
 pytube3
+keras
+tensorflow
+watchdog

@@ -3,21 +3,29 @@ import time
 import streamlit as st
 import cv2
 from pytube import YouTube
+import keras
+
 
 import settings
 
 
-def load_model(model_path):
+def load_model(model_path, name='yolov8'):
     """
-    Loads a YOLO object detection model from the specified model_path.
+    Loads a YOLO object detection model or Resnet_v2_50 from the specified model_path.
 
     Parameters:
         model_path (str): The path to the YOLO model file.
 
     Returns:
-        A YOLO object detection model.
+        A YOLO object detection model or Resnet_v2_50 classification model.
     """
-    model = YOLO(model_path)
+    if name == 'yolov8':
+        model = YOLO(model_path, task='detect')
+    elif name == 'resnet':
+        model = keras.models.load_model(model_path)
+    else:
+        raise ValueError(f"Unknown model name: {name}")
+
     return model
 
 
