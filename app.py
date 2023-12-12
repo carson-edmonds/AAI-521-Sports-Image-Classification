@@ -17,24 +17,27 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Main page heading
-st.title("Object Detection using YOLOv8")
 
 # Sidebar
 st.sidebar.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'Classification'])
+    "Select Model Task", ['Detection', 'Classification'])
 
-# Selecting Detection Or Segmentation
+
+
+# Selecting Detection Or Classification
 if model_type == 'Detection':
     model_path = Path(settings.DETECTION_MODEL)
     sidebar_slider = st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)
     confidence = float(sidebar_slider) / 100
+    # Main page heading
+    st.title("Object Detection using YOLOv8")
 elif model_type == 'Classification':
     model_path = Path(settings.CLASSIFICATION_MODEL)
+    st.title("Sports Image Classification using ResNet50v2 Model")
 
 # Load Pre-trained ML Model
 try:
@@ -78,21 +81,40 @@ if source_radio == settings.IMAGE:
             st.image(default_detected_image_path, caption='Detected Image',
                      use_column_width=True)
         else:
-            if st.sidebar.button('Detect Objects'):
-                res = model.predict(uploaded_image,
-                                    conf=confidence
-                                    )
-                boxes = res[0].boxes
-                res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption='Detected Image',
-                         use_column_width=True)
-                try:
-                    with st.expander("Detection Results"):
-                        for box in boxes:
-                            st.write(box.data)
-                except Exception as ex:
-                    # st.write(ex)
-                    st.write("No image is uploaded yet!")
+            if model_type == 'Detection':
+                if st.sidebar.button('Detect Objects'):
+                    res = model.predict(uploaded_image,
+                                        conf=confidence
+                                        )
+                    boxes = res[0].boxes
+                    res_plotted = res[0].plot()[:, :, ::-1]
+                    st.image(res_plotted, caption='Detected Image',
+                            use_column_width=True)
+                    try:
+                        with st.expander("Detection Results"):
+                            for box in boxes:
+                                st.write(box.data)
+                    except Exception as ex:
+                        # st.write(ex)
+                        st.write("No image is uploaded yet!")
+            elif model_type == 'Classification':                        
+                if st.sidebar.button('Predict Image Class'):
+                    print("uploaded_image", uploaded_image)
+                    processed_img = helper.preprocess_image(uploaded_image)
+                    res = model.predict(processed_img)
+                    print("res type", type(res))
+                    print("yoooo", res[0])
+                    # res_plotted = res[0].plot()[:, :, ::-1]
+                    # st.image(res, caption='Detected Image',
+                    #          use_column_width=True)
+                    # try:
+                    #     with st.expander("Detection Results"):
+                    #         # for box in boxes:
+                    #         #     st.write(box.data)
+                    # except Exception as ex:
+                    #     # st.write(ex)
+                    #     st.write("No image is uploaded yet!")
+
 
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)
