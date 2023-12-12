@@ -26,8 +26,8 @@ SOURCES_LIST = [IMAGE]
 
 # Images config
 IMAGES_DIR = ROOT / 'images'
-DEFAULT_IMAGE = IMAGES_DIR / 'soccer.jpg'
-DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'soccer.jpg'
+DEFAULT_IMAGE = IMAGES_DIR / 'tennis.jpg'
+DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'tennis-detected.jpg'
 
 # Videos config
 # VIDEO_DIR = ROOT / 'videos'
